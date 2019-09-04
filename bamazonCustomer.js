@@ -1,34 +1,122 @@
-### Challenge #1: Customer View (Minimum Requirement)
+//==========================================================================================================
+//=========================================== NPM packages =================================================
+//==========================================================================================================
+var mysql = require("mysql");
+var inquirer = require("inquirer");
+var Table = require("cli-table");
 
-1. Create a MySQL Database called `bamazon`.
+//==========================================================================================================
+//============================= CREATE THE CONNECTION FOR SQL DATABASE  ====================================
+//==========================================================================================================
+var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "ROOTROOT",
+    database: "bamazon"
+});
+ //connect to the mysql server and sql database
+connection.connect(function(err) {
+    if (err) throw err;
+     //run the start function after the connection is made to prompt the user
+    else console.log("\nWelcome to the Bamazon store");
+    console.log("===============================================================================");
+    start ();
+});
 
-2. Then create a Table inside of that database called `products`.
 
-3. The products table should have each of the following columns:
+//=================================================================================================================================================
+//============================================   BAMAZON STORE FRONT   ============================================================================
+//=================================================================================================================================================
 
-   * item_id (unique id for each product)
+function start() {
+    inquirer.prompt([{
+        name: "confirm",
+        type: "confirm",
+        message: "Would you like to see our products todays?",
+        default: true
+    }]).then(function (answer) {
+        if (answer.confirm) {
+            //Query to database to get all item info
+            var query = "SELECT item_id, product_name, department_name, price, stock_quantity FROM products";
+            connection.query(query, function (err, res) {
+                var table = new Table({
+                    head: ["Product Id", "Product Name", "Department", "Price", "Stock Quantity"],
+                    colWidths: [20, 20, 20, 20, 20]
+                });
+                for (var i = 0; i < res.length; i++) {
+                    table.push([res[i].item_id, res[i].product_name, res[i].department_name, "$" + res[i].price, res[i].stock_quantity]);
+                }
+                console.log("\n" + table.toString() + "\n");
+                purchaseItems();
+            });
+        } else {
+            console.log("Come back soon!");
+            connection.end();
+        };
+    });
+};
+//=================================================================================================================================================
+//============================================   BAMAZON CHECKOUT   ===============================================================================
+//=================================================================================================================================================
 
-   * product_name (Name of product)
+function purchaseItems() {
+    inquirer
+        .prompt([{
+                name: "id",
+                type: "input",
+                message: "Enter the Product ID of the item you wish to purhase: ",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                }
+            },
+            {
+                name: "units",
+                type: "input",
+                message: "Enter the amount of units you would like to purchase: ",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    };
+                    return false;
+                }
+            }
+        ])
+        .then(function (answer) {
+            var query = "SELECT item_id, stock_quantity, price, product_sales FROM products WHERE ?";
+            connection.query(query, {
+                    item_id: answer.id
+                },
+                function (err, res) {
+                    //If requested units is more than stock quantity
+                    if (err) throw err
+                    var checkStock= res[0].stock_quantity
+                    var purchasedStock= answer.units
+                    
+                    if (checkStock <= purchasedStock) {
+                        console.log("Insufficient quantity!")
+                        start();
+                    } else {
+                        //Update stock quantity in database
+                        var updateStock = checkStock - purchasedStock;
+                        connection.query("UPDATE products SET stock_quantity = " + updateStock + " WHERE ?", {
+                            item_id: answer.id
+                        });
+                        //Update product_sales column
+                        var priceCalculator= res[0].price
+                        var checkout = priceCalculator * purchasedStock;
+                        connection.query("UPDATE products SET product_sales = product_sales + " + checkout + " WHERE ?", {
+                            item_id: answer.id
+                        });
+                        //Display total cost
+                        console.log("Your order total is: $" + checkout);
+                        console.log("----------------------------------------------")
+                        start();
+                    };
+                });
+        });
+};
 
-   * department_name
-
-   * price (cost to customer)
-
-   * stock_quantity (how much of the product is available in stores)
-
-4. Populate this database with around 10 different products. (i.e. Insert "mock" data rows into this database and table).
-
-5. Then create a Node application called `bamazonCustomer.js`. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
-
-6. The app should then prompt users with two messages.
-
-   * The first should ask them the ID of the product they would like to buy.
-   * The second message should ask how many units of the product they would like to buy.
-
-7. Once the customer has placed the order, your application should check if your store has enough of the product to meet the customer's request.
-
-   * If not, the app should log a phrase like `Insufficient quantity!`, and then prevent the order from going through.
-
-8. However, if your store _does_ have enough of the product, you should fulfill the customer's order.
-   * This means updating the SQL database to reflect the remaining quantity.
-   * Once the update goes through, show the customer the total cost of their purchase.
