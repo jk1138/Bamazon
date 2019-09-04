@@ -1,10 +1,72 @@
 # Bamazon
-creating an Amazon-like storefront with the MySQL skills you learned this unit. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
 
-## Submission Guide
+## Overview
+In this project I created  an Amazon-like storefront with the MySQL skills you learned this unit. The app will take in orders from customers and deplete stock from the store's inventory.
 
-Make sure you use the normal GitHub. Because this is a CLI App, there will be no need to deploy it to Heroku. This time, though, you need to include screenshots, a gif, and/or a video showing us that you got the app working with no bugs. You can include these screenshots or a link to a video in a `README.md` file.
 
-* Include screenshots (or a video) of typical user flows through your application (for the customer and if relevant the manager/supervisor). This includes views of the prompts and the responses after their selection (for the different selection options).
+### Expected Outcomes
+The Bamazon app was designed to create a amazon store front interface through node. Despite having only 10 products in its categories, it will show the stock quantity depleting and the checkout total while the user goes from the storefront to the checkout steps. 
 
-* Include any other screenshots you deem necessary to help someone who has never been introduced to your application understand the purpose and function of it. This is how you will communicate to potential employers/other developers in the future what you built and why, and to show how it works. 
+
+### Built with
+
+- [JavaScript] (https://www.javascript.com/) - The programs in this language are called scripts. They can be written right in a web page’s HTML and run automatically as the page loads.
+- [Node.js] (https://nodejs.org/en/)- Node.js is a cross-platform JavaScript runtime environment that allows developers to build server-side and network applications with JavaScript.
+
+#### Node Packages used
+- MySQL -
+- Inquirer -
+- Cli-Table -
+
+
+### Functionality
+--- 
+1. First Creating A Connection to MySQL
+
+*< var connection = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "ROOTROOT",
+    database: "bamazon" });
+    / /connect to the mysql server and sql database
+    connection.connect(function(err) {
+        if (err) throw err;
+        //run the start function after the connection is made to prompt the user
+        else console.log("\nWelcome to the Bamazon store");
+        cons
+.log("===============================================================================");
+start ();
+});>*
+
+Function takes the userInput (command) and the userQuery(artist), and returns the next concert time and date for that artist, as well as location and city.
+
+######demo gif
+![concert-this demo](./screenshots/concert.gif)
+
+2. spotify-this-song
+
+*<command, song name>*
+
+Function takes the userInput (command) and the userQuery(song), and returns the artist, full track name, a preview link and the album.
+
+######demo gif
+![spotify-this demo](./screenshots/spotify.gif)
+
+3. movie-this
+*<command, movie name>*
+
+Function takes the userInput (command) and the userQuery(song), and returns title, cast, release date, ratings, country of origin, original language and synopsis.
+
+######demo gif
+![movie-this demo](./screenshots/movie.gif)
+
+
+4. do-this
+
+*<command>*
+
+This function is a wildcard that will randomly select one of the functions and produce a search. The only way to find out what it does is to try!
+
+######demo gif
+![do-this demo](./screenshots/read.gif)
