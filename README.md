@@ -30,32 +30,47 @@ The first portion of my code requires the app the installl these three npm packa
 
 ![npm-install-demo](./screenshots/npminstall.gif)
 
+
+
 **2**   `Create a Connection and Port` 
 
 ![screenshot-2](./screenshots/ss2.png)
+
+
 
 **3**   `Function for Bamazon Store Front` 
         
 ![screenshot-3](./screenshots/ss3.png)
 
-`Functiion start ()` is the function that will launch our app with an inquirer message asking the user if they would like to see our Bamazon products. If they answer "Y" (yes) then it will do a query pull from our bamazon database, a database we created in MySQL Workbench. If the user chooses "n" (no), then they will be prompted with a `come back soon!`. 
+`functiion start(){}` is the function that will launch our app with an inquirer message asking the user if they would like to see our Bamazon products. If they answer "Y" (yes) then it will do a query pull from our bamazon database, a database we created in MySQL Workbench. If the user chooses "n" (no), then they will be prompted with a `come back soon!`. 
 
 Now we can see this function in action when we launch the app with `node <file-name>`
 
 ![node-demo](./screenshots/node.gif)
 
 Once you hit **YES** you will see the Bamazon store front and all of the items that are in our inventory. Along with the items id, name, department, price, and stock quantity.
+
 ![store-demo](./screenshots/storefront.gif)
 
+
+
+**4**    `Function for Bamazon Checkout` 
+
 ![screenshot-4](./screenshots/ss4.png)
+![screenshot-5](./screenshots/ss5.png)
 
-**4**    `do-what-it-says` 
-        
-    node liri.js do-what-it-says
+`function purchaseItems(){}`will be the defining function to guide the user through the checkout process. This functions holds several inquiry prompts which will ask the user what product they would like and how many of those items they would like. The function will then call to another function, `function (answer)`, where it will do a query search with the prudct_id number that was provided by the customer. Afterwards it will check to see if the item is in stock.
 
-This command will select the request in the random.txt file and produce a search. In this particular repo, we have the `spotify-this-song,"I Want it That Way". `
+If the item exceeds the current stock_quantity then the user will be alerted with `insufficient quantity!`
 
-![do-this demo](./screenshots/read.gif)
+![checkout-demo-1](./screenshots/insufficientquant.gif)
 
+However, if the item is in stock and does not exceed the stock-quantity then the user will be pushed to the total cost display. And the product purchase cost will be pushed to a new column we have created in our MySQL database called `product_sales`. This column will help us when we create the bamazon manager application. 
+
+![checkout-demo-2](./screenshots/final.gif)
+
+We will use a price calculator to multiple with the purchased stock and the original price of the item to get the total cost. 
+
+![screenshot-final-cost](./screenshots/total.png)
 
 
