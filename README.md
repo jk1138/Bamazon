@@ -24,28 +24,30 @@ The Bamazon app was designed to create a amazon store front interface through no
 --- 
 **1**   `Download NPM Packages`
         
-  ![Please Download these packages first] (./screenshots/ss1.png)
+ ![screenshot-1](./screenshots/ss1.png)
         
-This command takes the user search request for artist in the bandsintown api, and returns the next concert time and date for that artist, as well as location and city.In this project, I set the default artist search to "Ariana Grande".
+The first portion of my code requires the app the installl these three npm packages in order for the rest of the code to work. 
 
-![npm install](./screenshots/npminstall.gif)
+![npm-install-demo](./screenshots/npminstall.gif)
 
-**2**   `spotify-this-song` 
+**2**   `Create a Connection and Port` 
+
+![screenshot-2](./screenshots/ss2.png)
+
+**3**   `Function for Bamazon Store Front` 
         
-    node liri.js spotify-this-song
+![screenshot-3](./screenshots/ss3.png)
 
-This command takes the user search request for songs/artist in the spotify api, and returns the artist, full track name, a preview link and the album. In this project, I set the default spotify song search to "The Sign".
+`Functiion start ()` is the function that will launch our app with an inquirer message asking the user if they would like to see our Bamazon products. If they answer "Y" (yes) then it will do a query pull from our bamazon database, a database we created in MySQL Workbench. If the user chooses "n" (no), then they will be prompted with a `come back soon!`. 
 
-![spotify-this demo](./screenshots/spotify.gif)
+Now we can see this function in action when we launch the app with `node <file-name>`
 
-**3**   `movie-this` 
-        
-    node liri.js movie-this
+![node-demo](./screenshots/node.gif)
 
-This command takes the user's search request for movies in the OMDB api, and returns title, cast, release date, ratings, country of origin, original language and synopsis. In this project, I set the default movie search to "Mr.Nobody".
+Once you hit **YES** you will see the Bamazon store front and all of the items that are in our inventory. Along with the items id, name, department, price, and stock quantity.
+![store-demo](./screenshots/storefront.gif)
 
-![movie-this demo](./screenshots/movie.gif)
-
+![screenshot-4](./screenshots/ss4.png)
 
 **4**    `do-what-it-says` 
         
