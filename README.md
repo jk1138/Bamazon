@@ -24,7 +24,7 @@ The Bamazon app was designed to create a amazon store front interface through no
 --- 
 **1**   `Download NPM Packages`
         
-   (./screenshots/ss1.png)
+  ![Please Download these packages first] (./screenshots/ss1.png)
         
 This command takes the user search request for artist in the bandsintown api, and returns the next concert time and date for that artist, as well as location and city.In this project, I set the default artist search to "Ariana Grande".
 
